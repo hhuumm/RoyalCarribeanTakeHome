@@ -29,7 +29,11 @@
             <div class="panel-body">
                 Add Form To Add Employee
 
-                <form action="{{ url_for('submit_employee') }}" method="post">
+                <form action="{{ url_for('submit_employee') }}" method="post" id="employee-form">
+                    <div class="form-group">
+                        <label for="person-id">Person ID:</label>
+                        <input type="number" class="form-control" id="person-id" name="person_id" required>
+                    </div>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
                         <input type="text" class="form-control" id="first-name" name="first_name" required>
@@ -44,13 +48,19 @@
                     </div>
                     <div class="form-group">
                         <label for="hire-date">Hire Date:</label>
-                        <input type="date" class="form-control" id="hire-date" name="hire_date" required>
+                        <input type="date" class="form-control" id="hire-date" name="hire_date" required max="{{current_date}}">
                     </div>
                     <div class="form-group">
                         <label for="job-title">Job Title:</label>
-                        <input type="text" class="form-control" id="job-title" name="job_title" required>
+                        <select class="form-control" id="job-title" name="job_title" required>
+                            <option value="" disabled selected>Select job title</option>
+                            <option value="TA Rep A">TA Rep A</option>
+                            <option value="TA Rep B">TA Rep B</option>
+                            <option value="Direct Rep A">Direct Rep A</option>
+                            <option value="Direct Rep B">Direct Rep B</option>
+                        </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="agency-number-group">
                         <label for="agency-num">Agency Number:</label>
                         <input type="number" class="form-control" id="agency-num" name="agency_num">
                     </div>
@@ -74,5 +84,64 @@
     </div>
 </div>
 
+
+
+<script>
+
+        document.querySelector("#employee-form").addEventListener("submit", function (event) {
+            //Declarations
+            var firstName = document.querySelector("#first-name").value;
+            var lastName = document.querySelector("#last-name").value;
+            var emailAddress = document.querySelector("#email").value;
+            var hireDate = document.querySelector("#hire-date").value;
+            var jobTitle = document.querySelector("#job-title").value;
+            var personID = document.querySelector("#person-id").value;
+            const currentDate = new Date();
+
+
+            //Validation
+
+            // Check if required fields are empty
+            if (!firstName || !lastName || !emailAddress || !hireDate || !jobTitle || !personID) {
+                event.preventDefault();
+                alert('Please fill in all required fields.');
+            }
+
+            // Person ID
+            if (personID.length !== 7 || isNaN(personID)) {
+                event.preventDefault();
+                alert('Please enter a valid person ID.');
+            }
+
+            // Email
+            if (emailAddress) {
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailAddress) || !emailAddress.includes('.') || emailAddress.includes(' ')) {
+                    event.preventDefault();
+                    alert('Please enter a valid email address.');
+                }
+            }
+
+            // Date Hired
+            if (hireDate > currentDate) {
+                alert("Hire date cannot be in the future.");
+            }
+
+
+        });
+
+        // Display agency number field based on job title
+        document.querySelector("#agency-number-group").style.display = "none";
+
+        // Show/hide the agency number form group based on the selected job title option
+        document.querySelector("#job-title").addEventListener("change", function () {
+            if (this.value == "Direct Rep A" || this.value == "Direct Rep B") {
+                document.querySelector("#agency-number-group").style.display = "block";
+            } else {
+                document.querySelector("#agency-number-group").style.display = "none";
+            }
+        });
+
+</script>
 
 {% endblock %}

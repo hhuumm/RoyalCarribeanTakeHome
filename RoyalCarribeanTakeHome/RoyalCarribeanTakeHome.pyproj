@@ -41,6 +41,7 @@
     <Folder Include="RoyalCarribeanTakeHome\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="libman.json" />
     <Content Include="requirements.txt" />
     <Content Include="RoyalCarribeanTakeHome\static\content\bootstrap.css" />
     <Content Include="RoyalCarribeanTakeHome\static\content\bootstrap.min.css" />
