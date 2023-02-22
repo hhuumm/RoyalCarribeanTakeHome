@@ -3,31 +3,76 @@
 {% block content %}
 
 <div class="jumbotron">
-    <h1>Flask</h1>
-    <p class="lead">Flask is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://flask.pocoo.org/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <h1>Employee List</h1>
+    <h3>Hello!</h3>
+    <p class="lead"> Hamid Ebrahimi here doing the assessment. A couple things I wanted to point out before you get to playing with this <b>CRUD</b></p>
+    <ol>
+        <li>
+            I don't traditionally write web apps with python
+        </li>
+        <li>
+            I am making use of VisualStudio 2022 templates to get this done.
+        </li>
+    </ol>
+    <p>With all that said, enjoy my quick and dirty form for adding and removing employees</p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            Flask gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://flask.pocoo.org/docs/">Learn more &raquo;</a></p>
+
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Add Employee</a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+                Add Form To Add Employee
+
+                <form action="{{ url_for('submit_employee') }}" method="post">
+                    <div class="form-group">
+                        <label for="first-name">First Name:</label>
+                        <input type="text" class="form-control" id="first-name" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name:</label>
+                        <input type="text" class="form-control" id="last-name" name="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" class="form-control" id="email" name="email_address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hire-date">Hire Date:</label>
+                        <input type="date" class="form-control" id="hire-date" name="hire_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="job-title">Job Title:</label>
+                        <input type="text" class="form-control" id="job-title" name="job_title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="agency-num">Agency Number:</label>
+                        <input type="number" class="form-control" id="agency-num" name="agency_num">
+                    </div>
+                    <input type="hidden" name="registration_date" value="{{ current_date }}">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.python.org/pypi">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Microsoft Azure</h2>
-        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Edit Employees</a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">
+                ReadUpdateDelete employee list
+            </div>
+        </div>
     </div>
 </div>
+
 
 {% endblock %}
