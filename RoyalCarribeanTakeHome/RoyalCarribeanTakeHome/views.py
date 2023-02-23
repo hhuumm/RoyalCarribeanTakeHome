@@ -150,7 +150,6 @@ def edit_employee(person_id):
             'job_title': result[5],
             'agency_num': result[6]
         }
-        print("FROM THE EDIT FUNCTION")
-        print(employee)
+       
         # Render the edit form with the employee data
         return redirect(url_for('home', person_id=person_id))

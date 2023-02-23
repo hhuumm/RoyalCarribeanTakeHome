@@ -45,19 +45,19 @@
                     </div>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
-                        <input type="text" class="form-control" id="first-name" name="first_name" value="{{ employee.first_name if employee else '' }}" required>
+                        <input type="text" class="form-control" id="first-name" name="first_name" value="" required>
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name:</label>
-                        <input type="text" class="form-control" id="last-name" name="last_name" value="{{ employee.last_name if employee else '' }}" required>
+                        <input type="text" class="form-control" id="last-name" name="last_name" value="" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email Address:</label>
-                        <input type="email" class="form-control" id="email" name="email_address" value="{{ employee.email_address if employee else '' }}" required>
+                        <input type="email" class="form-control" id="email" name="email_address" value="" required>
                     </div>
                     <div class="form-group">
                         <label for="hire-date">Hire Date:</label>
-                        <input type="date" class="form-control" id="hire-date" name="hire_date" value="{{ employee.hire_date if employee else '' }}" required max="{{current_date}}">
+                        <input type="date" class="form-control" id="hire-date" name="hire_date" value="" required max="{{current_date}}">
                     </div>
                     <div class="form-group">
                         <label for="job-title">Job Title:</label>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group" id="agency-number-group">
                         <label for="agency-num">Agency Number:</label>
-                        <input type="number" class="form-control" id="agency-num" name="agency_num" value="{{ employee.agency_num if employee else '' }}">
+                        <input type="number" class="form-control" id="agency-num" name="agency_num" value="">
                     </div>
                     <input type="hidden" name="registration_date" value="{{ current_date }}">
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -294,6 +294,16 @@
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
+
+    //Accordion Styling
+    var accordions = document.querySelectorAll('.accordion-header');
+    accordions.forEach(function (accordion) {
+        accordion.addEventListener('click', function (event) {
+            if (!this.classList.contains('collapsed')) {
+                this.scrollIntoView();
+            }
+        });
+    });
 
        
 </script>
