@@ -89,7 +89,9 @@
         </div>
         <div id="collapseTwo" class="panel-collapse collapse">
             <div class="panel-body" id="employee-list">
-                Loading...
+                {% if delete_success %}
+                <span class="text-success">{{delete_success}}</span>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -166,11 +168,12 @@
 
                 /*Grab the container for the table*/
                 const employeeList = document.querySelector('#employee-list');
-                employeeList.innerHTML = '';
 
                 /*Check if there is data returned if not say there are no employees*/
                 if (data.length === 0) {
-                    employeeList.innerHTML = 'There are no employees';
+                    const noEmployeesMessage = document.createElement('h3');
+                    noEmployeesMessage.innerText = "There are no saved employees"
+                    employeeList.appendChild(noEmployeesMessage);
                     return;
                 }
 
@@ -198,8 +201,6 @@
                     headerCell.classList.add('text-capitalize');
                     headerRow.appendChild(headerCell);
                 }
-
-               
 
 
                 // Row for each employee
@@ -230,21 +231,19 @@
                         }
                     };
                     deleteForm.appendChild(deleteButton);
-
                     row.appendChild(deleteCell);
                 });
-
-
-
-
-
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
 
-            //Check to see if there is success or error else display employees
-
+                //Check to see if there is success or error else display employees
+            {% if success or error %}
+            document.getElementById('collapseOne').classList.add('in');
+            {% else %}
+            document.getElementById('collapseTwo').classList.add('in');
+            {% endif %}
          
             
     

@@ -3,7 +3,7 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template,request,jsonify,url_for
+from flask import render_template,request,jsonify,url_for,redirect
 from . import app,cursor,cnx
 
 class Employee:
@@ -21,14 +21,28 @@ class Employee:
 @app.route('/')
 @app.route('/home')
 def home():
-    """Renders the home page."""
+    # Check if there's a delete_success variable in the query string
+    delete_success = request.args.get('delete_success')
+    error = request.args.get('error')
+    success = request.args.get('success')
 
+    # Set default values for nullable objects
+    if not delete_success:
+        delete_success = None
+    if not error:
+        error = None
+    if not success:
+        success = None
 
     return render_template(
         'index.html',
         title='Home Page',
-        current_date = datetime.today().strftime('%Y-%m-%d')
+        current_date=datetime.today().strftime('%Y-%m-%d'),
+        delete_success=delete_success,
+        error=error,
+        success=success
     )
+
 
 @app.route('/submit-employee', methods=['POST'])
 def submit_employee():
@@ -63,13 +77,7 @@ def submit_employee():
     values = (person_id, first_name, last_name, email_address, hire_date, job_title, agency_num, registration_date)
     cursor.execute(query, values)
     cnx.commit()
-
-    return render_template(
-    'index.html',
-    title='Home Page',
-    current_date = datetime.today().strftime('%Y-%m-%d'),
-    success="you have successfully submitted an employee"
-    )
+    return redirect(url_for('home', success="you have successfully submitted an employee"))
 
 @app.route('/api/employees', methods=['GET'])
 def get_employees():
@@ -94,18 +102,13 @@ def get_employees():
 
     return jsonify(employees)
 
-@app.route('/delete/<id>',methods=['POST'])
+@app.route('/delete/<id>', methods=['POST'])
 def delete_employee(id):
     # Delete the employee with the given ID from the Employees table
     query = "DELETE FROM Employees WHERE person_id = %s"
     cursor.execute(query, (id,))
     cnx.commit()
-    return render_template(
-    'index.html',
-    title='Home Page',
-    current_date = datetime.today().strftime('%Y-%m-%d'),
-    delete_success="you have successfully deleted employee " + id
-    )
+    return redirect(url_for('home', delete_success="you have successfully deleted employee " + id))
 
 @app.route('/edit/<id>',methods=['GET', 'POST'])
 def edit_item(id):
