@@ -38,30 +38,26 @@
                 <span class="text-success">{{success}}</span>
                 {% endif %}
 
-
-
-                {% if not employee %}
-
-                <form action="{{ url_for('submit_employee') }}" method="post" id="employee-form">
+                <form action="{{ url_for('edit_employee', person_id=person_id) if person_id else url_for('submit_employee') }}" method="post" id="employee-form">
                     <div class="form-group">
                         <label for="person-id">Person ID:</label>
-                        <input type="number" class="form-control" id="person-id" name="person_id" required>
+                        <input type="number" class="form-control" id="person-id" name="person_id" value="{{ person_id if person_id else '' }}" {% if person_id %}readonly{% endif %} required>
                     </div>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
-                        <input type="text" class="form-control" id="first-name" name="first_name" required>
+                        <input type="text" class="form-control" id="first-name" name="first_name" value="{{ employee.first_name if employee else '' }}" required>
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name:</label>
-                        <input type="text" class="form-control" id="last-name" name="last_name" required>
+                        <input type="text" class="form-control" id="last-name" name="last_name" value="{{ employee.last_name if employee else '' }}" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email Address:</label>
-                        <input type="email" class="form-control" id="email" name="email_address" required>
+                        <input type="email" class="form-control" id="email" name="email_address" value="{{ employee.email_address if employee else '' }}" required>
                     </div>
                     <div class="form-group">
                         <label for="hire-date">Hire Date:</label>
-                        <input type="date" class="form-control" id="hire-date" name="hire_date" required max="{{current_date}}">
+                        <input type="date" class="form-control" id="hire-date" name="hire_date" value="{{ employee.hire_date if employee else '' }}" required max="{{current_date}}">
                     </div>
                     <div class="form-group">
                         <label for="job-title">Job Title:</label>
@@ -75,54 +71,11 @@
                     </div>
                     <div class="form-group" id="agency-number-group">
                         <label for="agency-num">Agency Number:</label>
-                        <input type="number" class="form-control" id="agency-num" name="agency_num">
+                        <input type="number" class="form-control" id="agency-num" name="agency_num" value="{{ employee.agency_num if employee else '' }}">
                     </div>
                     <input type="hidden" name="registration_date" value="{{ current_date }}">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-
-                {% else %}
-
-                <form action="{{ url_for('edit_item', id=employee['person_id']) }}" method="post" id="employee-form">
-                    <div class="form-group">
-                        <label for="person-id">Person ID:</label>
-                        <input type="number" class="form-control" id="person-id" name="person_id" value="{{ employee['person_id'] }}" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="first-name">First Name:</label>
-                        <input type="text" class="form-control" id="first-name" name="first_name" value="{{ employee['first_name'] }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last Name:</label>
-                        <input type="text" class="form-control" id="last-name" name="last_name" value="{{ employee['last_name'] }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address:</label>
-                        <input type="email" class="form-control" id="email" name="email_address" value="{{ employee['email_address'] }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="hire-date">Hire Date:</label>
-                        <input type="date" class="form-control" id="hire-date" name="hire_date" value="{{ employee['hire_date'] }}" required max="{{current_date}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="job-title">Job Title:</label>
-                        <select class="form-control" id="job-title" name="job_title" required>
-                            <option value="" disabled>Select job title</option>
-                            {% set job_titles = ['TA Rep A', 'TA Rep B', 'Direct Rep A', 'Direct Rep B'] %}
-                            {% for title in job_titles %}
-                            <option value="{{ title }}" {% if employee['job_title']== "{{title}}" %} selected {% endif %}>{{ title }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group" id="agency-number-group">
-                        <label for="agency-num">Agency Number:</label>
-                        <input type="number" class="form-control" id="agency-num" name="agency_num" value="{{ employee['agency_num'] }}">
-                    </div>
-                    <input type="hidden" name="registration_date" value="{{ current_date }}">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-
-                {% endif %}
 
             </div>
         </div>
@@ -148,7 +101,9 @@
 
 
 <script>
-   
+
+    console.log("FROM THE MAINSTAGE, IT\'s / BACK AT IT AGAIN WITH THE EMPLOYEE")
+    console.log("{{employee}}");
             //Adding Employee Validation
         document.querySelector("#employee-form").addEventListener("submit", function (event) {
             //Declarations
@@ -214,6 +169,7 @@
             })
             .then(data => {
 
+               
                 /*Grab the container for the table*/
                 const employeeList = document.querySelector('#employee-list');
 
@@ -252,7 +208,9 @@
 
 
                 // Row for each employee
+                const employeeData = {};
                 data.forEach((employee) => {
+                    employeeData[employee.person_id] = employee;
                     const row = document.createElement('tr');
                     table.appendChild(row);
                     for (const key in translationDict) {
@@ -297,25 +255,46 @@
                     deleteForm.appendChild(deleteButton);
                     row.appendChild(deleteCell);
                 });
+
+                {% if success or error %}
+                document.getElementById('collapseOne').classList.add('in');
+                {% elif person_id %}
+                const employee = employeeData["{{person_id}}"];
+                if (employee) {
+                    document.getElementById('collapseOne').classList.add('in');
+                    document.querySelector('#first-name').value = employee.first_name;
+                    document.querySelector('#last-name').value = employee.last_name;
+                    document.querySelector('#email').value = employee.email_address;
+                    document.querySelector('#hire-date').value = employee.hire_date;
+
+                    //Setting job title field to proper value
+                    const jobTitleSelect = document.querySelector('#job-title');
+                    const jobTitleOptions = jobTitleSelect.options;
+
+                    // Set the selected option based on the employee job title
+                    for (let i = 0; i < jobTitleOptions.length; i++) {
+                        if (jobTitleOptions[i].value === employee.job_title) {
+                            jobTitleOptions[i].selected = true;
+                            break;
+                        }
+                    }
+                    document.querySelector('#person-id').value = employee.person_id;
+
+                    //Disable the id
+                    document.querySelector('#person-id').disabled = true;
+                    if (employee.agency_num) {
+                        document.querySelector('#agency-number-group').style.display = 'block';
+                        document.querySelector('#agency-num').value = employee.agency_num;
+                    }
+                }
+                {% else %}
+                document.getElementById('collapseTwo').classList.add('in');
+                {% endif %}
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
 
-                //Check to see if there is success or error else display employees
-            {% if success or error or employee  %}
-            document.getElementById('collapseOne').classList.add('in');
-            {% else %}
-            document.getElementById('collapseTwo').classList.add('in');
-            {% endif %}
-         
-            
-    
-
-
-
-        
-
+       
 </script>
-
 {% endblock %}

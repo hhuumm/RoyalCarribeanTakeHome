@@ -21,13 +21,12 @@ class Employee:
 @app.route('/')
 @app.route('/home')
 def home():
-    # Check if there's a delete_success variable in the query string
+        # Check if there's a delete_success variable in the query string
     delete_success = request.args.get('delete_success')
     error = request.args.get('error')
     success = request.args.get('success')
     person_id = request.args.get('person_id');
-
-    # Set default values for nullable objects
+        # Set default values for nullable objects
     if not delete_success:
         delete_success = None
     if not error:
@@ -35,25 +34,7 @@ def home():
     if not success:
         success = None
     if not person_id:
-           person_id = None
-
-        # If person_id is not None, fetch the record with that person_id
-    employee = None
-    if person_id:
-        query = "SELECT * FROM Employees WHERE person_id = %s"
-        cursor.execute(query, (person_id,))
-        result = cursor.fetchone()
-        if result:
-            employee = {
-                "person_id": result[0],
-                "first_name": result[1],
-                "last_name": result[2],
-                "email_address": result[3],
-                "hire_date": result[4].strftime('%Y-%m-%d'),
-                "job_title": result[5],
-                "agency_num": result[6],
-                "registration_date": str(datetime.today())
-            }
+        person_id = None
 
     return render_template(
         'index.html',
@@ -62,10 +43,8 @@ def home():
         delete_success=delete_success,
         error=error,
         success=success,
-        employee=employee
+        person_id=person_id
     )
-
-
 
 @app.route('/submit-employee', methods=['POST'])
 def submit_employee():
@@ -133,12 +112,45 @@ def delete_employee(id):
     cnx.commit()
     return redirect(url_for('home', delete_success="you have successfully deleted employee " + id))
 
-@app.route('/edit/<id>',methods=['GET', 'POST'])
-def edit_item(id):
-        # code to get the item with the given ID from the database
+@app.route('/edit/<person_id>', methods=['GET', 'POST'])
+def edit_employee(person_id):
     if request.method == 'POST':
-        # code to update the item in the database with the new data from the form
-        return f"Item with ID {id} has been updated"
-    else:
-        # code to render the edit form with the item data
-         return redirect(url_for('home', person_id = id))
+        # Get the data from the form
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email_address = request.form['email_address']
+        hire_date = request.form['hire_date']
+        job_title = request.form['job_title']
+        agency_num = request.form['agency_num']
+
+        # Update the employee record in the database
+        query = "UPDATE Employees SET first_name = %s, last_name = %s, email_address = %s, hire_date = %s, job_title = %s, agency_num = %s WHERE person_id = %s"
+        cursor.execute(query, (first_name, last_name, email_address, hire_date, job_title, agency_num, person_id))
+        cnx.commit()
+
+        return redirect(url_for('home', delete_success='Employee record has been updated'))
+
+    elif request.method =="GET":
+        # Fetch the employee record from the database
+        query = "SELECT * FROM Employees WHERE person_id = %s"
+        cursor.execute(query, (person_id,))
+        result = cursor.fetchone()
+
+        # Check if an employee record with the given ID exists
+        if not result:
+            return redirect(url_for('home', error='Employee record not found'))
+
+        # Construct a dictionary representing the employee record
+        employee = {
+            'person_id': result[0],
+            'first_name': result[1],
+            'last_name': result[2],
+            'email_address': result[3],
+            'hire_date': result[4].strftime('%Y-%m-%d'),
+            'job_title': result[5],
+            'agency_num': result[6]
+        }
+        print("FROM THE EDIT FUNCTION")
+        print(employee)
+        # Render the edit form with the employee data
+        return redirect(url_for('home', person_id=person_id))
