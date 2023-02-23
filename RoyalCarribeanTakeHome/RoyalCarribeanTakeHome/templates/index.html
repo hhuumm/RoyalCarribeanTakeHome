@@ -2,6 +2,8 @@
 
 {% block content %}
 
+
+<!--The Intro-->
 <div class="jumbotron">
     <h1>Employee List</h1>
     <h3>Hello!</h3>
@@ -18,7 +20,9 @@
 </div>
 
 
+<!--The Task-->
 <div class="panel-group" id="accordion">
+   <!--Add employee-->
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -27,7 +31,6 @@
         </div>
         <div id="collapseOne" class="panel-collapse collapse">
             <div class="panel-body">
-                Add Form To Add Employee
 
                 <form action="{{ url_for('submit_employee') }}" method="post" id="employee-form">
                     <div class="form-group">
@@ -70,6 +73,8 @@
             </div>
         </div>
     </div>
+    
+    <!--View Edit Delete Employee-->
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -77,8 +82,8 @@
             </h4>
         </div>
         <div id="collapseTwo" class="panel-collapse collapse">
-            <div class="panel-body">
-                ReadUpdateDelete employee list
+            <div class="panel-body" id="employee-list">
+                Loading...
             </div>
         </div>
     </div>
@@ -88,6 +93,7 @@
 
 <script>
 
+            //Adding Employee Validation
         document.querySelector("#employee-form").addEventListener("submit", function (event) {
             //Declarations
             var firstName = document.querySelector("#first-name").value;
@@ -130,10 +136,10 @@
 
         });
 
-        // Display agency number field based on job title
+            // Hiding Agency Number
         document.querySelector("#agency-number-group").style.display = "none";
 
-        // Show/hide the agency number form group based on the selected job title option
+            // Conditional Rendering Of Agency Number Field
         document.querySelector("#job-title").addEventListener("change", function () {
             if (this.value == "Direct Rep A" || this.value == "Direct Rep B") {
                 document.querySelector("#agency-number-group").style.display = "block";
@@ -141,6 +147,63 @@
                 document.querySelector("#agency-number-group").style.display = "none";
             }
         });
+
+            //Get the employees
+        fetch('/api/employees')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                const employeeList = document.querySelector('#employee-list');
+                employeeList.innerHTML = '';
+
+                // Initialize the table
+                const table = document.createElement('table');
+                table.classList.add('table', 'table-striped');
+                employeeList.appendChild(table);
+
+                // Create the table headers
+                const translationDict = {
+                    'person_id': 'Person ID',
+                    'first_name': 'First Name',
+                    'last_name': 'Last Name',
+                    'email_address': 'Email',
+                    'hire_date': 'Hire Date',
+                    'job_title': 'Job Title',
+                    'agency_num': 'Agency Number',
+                    'registration_date': 'Registration Date'
+                };
+                const headerRow = document.createElement('tr');
+                table.appendChild(headerRow);
+                for (const key in translationDict) {
+                    const headerCell = document.createElement('th');
+                    headerCell.innerText = translationDict[key];
+                    headerCell.classList.add('text-capitalize');
+                    headerRow.appendChild(headerCell);
+                }
+
+                // Add a table row for each employee object
+                data.forEach((employee) => {
+                    const row = document.createElement('tr');
+                    table.appendChild(row);
+                    for (const key in translationDict) {
+                        const cell = document.createElement('td');
+                        cell.innerText = employee[key];
+                        row.appendChild(cell);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    
+
+
+
+        
 
 </script>
 
