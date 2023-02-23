@@ -25,6 +25,7 @@ def home():
     delete_success = request.args.get('delete_success')
     error = request.args.get('error')
     success = request.args.get('success')
+    person_id = request.args.get('person_id');
 
     # Set default values for nullable objects
     if not delete_success:
@@ -33,6 +34,26 @@ def home():
         error = None
     if not success:
         success = None
+    if not person_id:
+           person_id = None
+
+        # If person_id is not None, fetch the record with that person_id
+    employee = None
+    if person_id:
+        query = "SELECT * FROM Employees WHERE person_id = %s"
+        cursor.execute(query, (person_id,))
+        result = cursor.fetchone()
+        if result:
+            employee = {
+                "person_id": result[0],
+                "first_name": result[1],
+                "last_name": result[2],
+                "email_address": result[3],
+                "hire_date": result[4].strftime('%Y-%m-%d'),
+                "job_title": result[5],
+                "agency_num": result[6],
+                "registration_date": str(datetime.today())
+            }
 
     return render_template(
         'index.html',
@@ -40,8 +61,10 @@ def home():
         current_date=datetime.today().strftime('%Y-%m-%d'),
         delete_success=delete_success,
         error=error,
-        success=success
+        success=success,
+        employee=employee
     )
+
 
 
 @app.route('/submit-employee', methods=['POST'])
@@ -118,4 +141,4 @@ def edit_item(id):
         return f"Item with ID {id} has been updated"
     else:
         # code to render the edit form with the item data
-        return render_template('edit.html', employee="")
+         return redirect(url_for('home', person_id = id))

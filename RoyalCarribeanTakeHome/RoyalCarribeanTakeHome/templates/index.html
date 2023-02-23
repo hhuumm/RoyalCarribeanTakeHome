@@ -38,6 +38,10 @@
                 <span class="text-success">{{success}}</span>
                 {% endif %}
 
+
+
+                {% if not employee %}
+
                 <form action="{{ url_for('submit_employee') }}" method="post" id="employee-form">
                     <div class="form-group">
                         <label for="person-id">Person ID:</label>
@@ -76,6 +80,50 @@
                     <input type="hidden" name="registration_date" value="{{ current_date }}">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+
+                {% else %}
+
+                <form action="{{ url_for('edit_item', id=employee['person_id']) }}" method="post" id="employee-form">
+                    <div class="form-group">
+                        <label for="person-id">Person ID:</label>
+                        <input type="number" class="form-control" id="person-id" name="person_id" value="{{ employee['person_id'] }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="first-name">First Name:</label>
+                        <input type="text" class="form-control" id="first-name" name="first_name" value="{{ employee['first_name'] }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name:</label>
+                        <input type="text" class="form-control" id="last-name" name="last_name" value="{{ employee['last_name'] }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" class="form-control" id="email" name="email_address" value="{{ employee['email_address'] }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hire-date">Hire Date:</label>
+                        <input type="date" class="form-control" id="hire-date" name="hire_date" value="{{ employee['hire_date'] }}" required max="{{current_date}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="job-title">Job Title:</label>
+                        <select class="form-control" id="job-title" name="job_title" required>
+                            <option value="" disabled>Select job title</option>
+                            {% set job_titles = ['TA Rep A', 'TA Rep B', 'Direct Rep A', 'Direct Rep B'] %}
+                            {% for title in job_titles %}
+                            <option value="{{ title }}" {% if employee['job_title']== "{{title}}" %} selected {% endif %}>{{ title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group" id="agency-number-group">
+                        <label for="agency-num">Agency Number:</label>
+                        <input type="number" class="form-control" id="agency-num" name="agency_num" value="{{ employee['agency_num'] }}">
+                    </div>
+                    <input type="hidden" name="registration_date" value="{{ current_date }}">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+                {% endif %}
+
             </div>
         </div>
     </div>
@@ -100,7 +148,7 @@
 
 
 <script>
-
+   
             //Adding Employee Validation
         document.querySelector("#employee-form").addEventListener("submit", function (event) {
             //Declarations
@@ -213,7 +261,23 @@
                         row.appendChild(cell);
                     }
 
-                    // Add a cell for the delete button
+
+                    // Add a cell for the EDIT button
+                    const editCell = document.createElement('td');
+                    const editForm = document.createElement('form');
+                    editForm.action = `/edit/${employee['person_id']}`;
+                    editForm.method = 'GET';  
+                    editCell.appendChild(editForm);
+
+                    const editButton = document.createElement('button');
+                    editButton.innerText = 'Edit';
+                    editButton.type = 'submit';
+                    editButton.classList.add('btn', 'btn-info');
+                    
+                    editForm.appendChild(editButton);
+                    row.appendChild(editCell);
+
+                    // Add a cell for the DELETE button
                     const deleteCell = document.createElement('td');
                     const deleteForm = document.createElement('form');
                     deleteForm.action = `/delete/${employee['person_id']}`;
@@ -239,7 +303,7 @@
             });
 
                 //Check to see if there is success or error else display employees
-            {% if success or error %}
+            {% if success or error or employee  %}
             document.getElementById('collapseOne').classList.add('in');
             {% else %}
             document.getElementById('collapseTwo').classList.add('in');
