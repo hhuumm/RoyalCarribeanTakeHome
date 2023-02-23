@@ -28,12 +28,14 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="RoyalCarribeanTakeHome\config\config.py" />
     <Compile Include="runserver.py" />
     <Compile Include="RoyalCarribeanTakeHome\__init__.py" />
     <Compile Include="RoyalCarribeanTakeHome\views.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="RoyalCarribeanTakeHome\" />
+    <Folder Include="RoyalCarribeanTakeHome\config\" />
     <Folder Include="RoyalCarribeanTakeHome\static\" />
     <Folder Include="RoyalCarribeanTakeHome\static\content\" />
     <Folder Include="RoyalCarribeanTakeHome\static\fonts\" />

@@ -29,8 +29,14 @@
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Add Employee</a>
             </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse">
+        <div id="collapseOne" class="panel-collapse collapse in">
             <div class="panel-body">
+                {% if error %}
+                <span class="text-danger">{{error}}</span>
+                {% endif %}
+                {% if success %}
+                <span class="text-success">{{success}}</span>
+                {% endif %}
 
                 <form action="{{ url_for('submit_employee') }}" method="post" id="employee-form">
                     <div class="form-group">
@@ -160,6 +166,12 @@
                 const employeeList = document.querySelector('#employee-list');
                 employeeList.innerHTML = '';
 
+
+                if (data.length === 0) {
+                    employeeList.innerHTML = 'There are no employees';
+                    return;
+                }
+
                 // Initialize the table
                 const table = document.createElement('table');
                 table.classList.add('table', 'table-striped');
@@ -199,6 +211,9 @@
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
+
+            //Check to see if there is success or error
+        
     
 
 

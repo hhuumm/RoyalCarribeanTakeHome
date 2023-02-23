@@ -4,7 +4,7 @@ Routes and views for the flask application.
 
 from datetime import datetime
 from flask import render_template,request,jsonify,url_for
-from RoyalCarribeanTakeHome import app
+from . import app,cursor,cnx
 
 class Employee:
     def __init__(self, person_id, first_name, last_name, email_address, hire_date, job_title, agency_num=None):
@@ -22,6 +22,8 @@ class Employee:
 @app.route('/home')
 def home():
     """Renders the home page."""
+
+
     return render_template(
         'index.html',
         title='Home Page',
@@ -31,6 +33,7 @@ def home():
 @app.route('/submit-employee', methods=['POST'])
 def submit_employee():
     # Get the form data from the request object
+    person_id = request.form.get('person_id')
     first_name = request.form.get('first_name')
     last_name = request.form.get('last_name')
     email_address = request.form.get('email_address')
@@ -39,36 +42,57 @@ def submit_employee():
     agency_num = request.form.get('agency_num')
     registration_date = request.form.get('registration_date')
 
-    # Process the form data as needed (e.g. store in a database)
-    # ...
+    # Check if the person_id is already in use
+    query = "SELECT COUNT(*) FROM Employees WHERE person_id = %s"
+    cursor.execute(query, (person_id,))
+    count = cursor.fetchone()[0]
+    if count > 0:
+        return render_template(
+        'index.html',
+        title='Home Page',
+        current_date = datetime.today().strftime('%Y-%m-%d'),
+        error=f"Error: person ID {person_id} is already in use"
+        )
 
-    return 'Employee submitted successfully'
+    # Insert the employee data into the Employees table
+    query = """
+        INSERT INTO Employees
+        (person_id, first_name, last_name, email_address, hire_date, job_title, agency_num, registration_date)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    """
+    values = (person_id, first_name, last_name, email_address, hire_date, job_title, agency_num, registration_date)
+    cursor.execute(query, values)
+    cnx.commit()
+
+    return render_template(
+    'index.html',
+    title='Home Page',
+    current_date = datetime.today().strftime('%Y-%m-%d'),
+    success="you have successfully submitted an employee"
+    )
+    
+
 
 @app.route('/api/employees', methods=['GET'])
 def get_employees():
-    # create a list of employees
-    employees = [
-        {
-            "person_id": 1,
-            "first_name": "John",
-            "last_name": "Doe",
-            "email_address": "johndoe@example.com",
-            "hire_date": "2020-01-01",
-            "job_title": "Software Engineer",
-            "agency_num": None,
-            "registration_date": str(datetime.today())
-        },
-        {
-            "person_id": 2,
-            "first_name": "Jane",
-            "last_name": "Doe",
-            "email_address": "janedoe@example.com",
-            "hire_date": "2021-01-01",
-            "job_title": "Data Scientist",
-            "agency_num": None,
+    # Execute a SELECT query on the Employees table
+    query = "SELECT * FROM Employees"
+    cursor.execute(query)
+
+    # Fetch all results and build a list of employee dictionaries
+    employees = []
+    for row in cursor.fetchall():
+        employee = {
+            "person_id": row[0],
+            "first_name": row[1],
+            "last_name": row[2],
+            "email_address": row[3],
+            "hire_date": row[4].strftime('%Y-%m-%d'),
+            "job_title": row[5],
+            "agency_num": row[6],
             "registration_date": str(datetime.today())
         }
-    ]
+        employees.append(employee)
 
     return jsonify(employees)
 
