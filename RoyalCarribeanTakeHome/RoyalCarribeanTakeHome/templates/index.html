@@ -29,7 +29,7 @@
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Add Employee</a>
             </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse in">
+        <div id="collapseOne" class="panel-collapse collapse">
             <div class="panel-body">
                 {% if error %}
                 <span class="text-danger">{{error}}</span>
@@ -163,21 +163,23 @@
                 throw new Error('Network response was not ok.');
             })
             .then(data => {
+
+                /*Grab the container for the table*/
                 const employeeList = document.querySelector('#employee-list');
                 employeeList.innerHTML = '';
 
-
+                /*Check if there is data returned if not say there are no employees*/
                 if (data.length === 0) {
                     employeeList.innerHTML = 'There are no employees';
                     return;
                 }
 
-                // Initialize the table
+                // Create the table
                 const table = document.createElement('table');
                 table.classList.add('table', 'table-striped');
                 employeeList.appendChild(table);
 
-                // Create the table headers
+                // Table headers
                 const translationDict = {
                     'person_id': 'Person ID',
                     'first_name': 'First Name',
@@ -197,7 +199,10 @@
                     headerRow.appendChild(headerCell);
                 }
 
-                // Add a table row for each employee object
+               
+
+
+                // Row for each employee
                 data.forEach((employee) => {
                     const row = document.createElement('tr');
                     table.appendChild(row);
@@ -206,14 +211,42 @@
                         cell.innerText = employee[key];
                         row.appendChild(cell);
                     }
+
+                    // Add a cell for the delete button
+                    const deleteCell = document.createElement('td');
+                    const deleteForm = document.createElement('form');
+                    deleteForm.action = `/delete/${employee['person_id']}`;
+                    deleteForm.method = 'POST';  // or use DELETE if your server supports it
+                    deleteCell.appendChild(deleteForm);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerText = 'Delete';
+                    deleteButton.type = 'submit';
+                    deleteButton.classList.add('btn', 'btn-danger');
+                    deleteButton.onclick = function (event) {
+                        const confirmed = confirm("Are you sure you want to delete record " + employee['person_id'] + " ?" );
+                        if (!confirmed) {
+                            event.preventDefault();
+                        }
+                    };
+                    deleteForm.appendChild(deleteButton);
+
+                    row.appendChild(deleteCell);
                 });
+
+
+
+
+
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
 
-            //Check to see if there is success or error
-        
+            //Check to see if there is success or error else display employees
+
+         
+            
     
 
 

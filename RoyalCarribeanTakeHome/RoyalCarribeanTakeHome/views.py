@@ -70,8 +70,6 @@ def submit_employee():
     current_date = datetime.today().strftime('%Y-%m-%d'),
     success="you have successfully submitted an employee"
     )
-    
-
 
 @app.route('/api/employees', methods=['GET'])
 def get_employees():
@@ -96,10 +94,18 @@ def get_employees():
 
     return jsonify(employees)
 
-@app.route('/delete/<id>',methods=['DELETE'])
+@app.route('/delete/<id>',methods=['POST'])
 def delete_employee(id):
-     # code to delete the item with the given ID from the database
-    return f"Deleted item with ID {id}"
+    # Delete the employee with the given ID from the Employees table
+    query = "DELETE FROM Employees WHERE person_id = %s"
+    cursor.execute(query, (id,))
+    cnx.commit()
+    return render_template(
+    'index.html',
+    title='Home Page',
+    current_date = datetime.today().strftime('%Y-%m-%d'),
+    delete_success="you have successfully deleted employee " + id
+    )
 
 @app.route('/edit/<id>',methods=['GET', 'POST'])
 def edit_item(id):
