@@ -7,7 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
     <script src="/static/scripts/modernizr-2.6.2.js"></script>
-    </head>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='icons/RCL.svg') }}">
+</head>
 
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -18,7 +19,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">Royal Caribbean</a>
+                <a href="/" class="navbar-brand">
+                    <img src="{{ url_for('static', filename='icons/RCL_BIG.svg') }}" alt="Royal Caribbean Logo" height="30">
+                </a>
             </div>
         </div>
     </div>
@@ -27,7 +30,7 @@
         {% block content %}{% endblock %}
         <hr />
         <footer>
-            <p>&copy; {{ year }} - My Flask Application</p>
+            <p>&copy; 2023 - Royal Caribbean Assessment</p>
         </footer>
     </div>
 

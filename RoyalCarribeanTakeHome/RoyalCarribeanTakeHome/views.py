@@ -38,7 +38,7 @@ def home():
 
     return render_template(
         'index.html',
-        title='Home Page',
+        title='Assessment',
         current_date=datetime.today().strftime('%Y-%m-%d'),
         delete_success=delete_success,
         error=error,

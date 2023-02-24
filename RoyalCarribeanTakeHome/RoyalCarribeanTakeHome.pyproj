@@ -55,6 +55,8 @@
     <Content Include="RoyalCarribeanTakeHome\static\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="RoyalCarribeanTakeHome\static\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="RoyalCarribeanTakeHome\static\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="RoyalCarribeanTakeHome\static\icons\RCL.svg" />
+    <Content Include="RoyalCarribeanTakeHome\static\icons\RCL_BIG.svg" />
     <Content Include="RoyalCarribeanTakeHome\static\icons\royal-caribbean-2-logo-svg-vector.svg" />
     <Content Include="RoyalCarribeanTakeHome\static\scripts\bootstrap.js" />
     <Content Include="RoyalCarribeanTakeHome\static\scripts\bootstrap.min.js" />
