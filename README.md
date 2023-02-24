@@ -22,13 +22,15 @@ To run the project locally, you will need to:
 
 Clone this repository to your local machine
 Install the required packages by running pip install -r requirements.txt
-Set up the database by running python setup_database.py
-Start the Flask server by running python app.py
+Start the Flask server by running python runserver.py
 Usage
 Be sure to have your .env file set up with the proper variable names
+USERNAME
 PASSWORD 
 CONNECTION_STRING
 PORT
+
+Standard flask setup, you can alter the 
 To use the project, open a web browser and go to http://localhost:5000/. From there, you can get, put, post , or delete an employee.
 
 Contributing
