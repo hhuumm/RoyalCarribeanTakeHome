@@ -58,11 +58,12 @@ Install the required packages by running pip install -r requirements.txt
 Start the Flask server by running python runserver.py
 Usage
 Be sure to have your .env file set up with the proper variable names
-USERNAME
-PASSWORD 
-CONNECTION_STRING
-PORT
-
+```
+USERNAME =
+PASSWORD =
+CONNECTION_STRING =
+PORT =
+```
 # Run the server
 The default port is set to http://localhost:5000/. 
 From there, you can get, put, post , or delete an employee.
