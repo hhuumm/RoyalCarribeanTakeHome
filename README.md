@@ -11,7 +11,7 @@
 [Click here to see it live](http://3.235.139.171:5000/)
 
 
-This is a repository for the Caribbean Cruise FullStack Software Engineer Role. The project is designed to do demonstrate full CRUD functionality and match the criteria requested by the hiring managers.
+This is a repository for the Caribbean Cruise FullStack Software Engineer Role. The project is designed to demonstrate full CRUD functionality and match the criteria requested by the hiring managers.
 
 # Technologies
 The project is built using the following technologies:
