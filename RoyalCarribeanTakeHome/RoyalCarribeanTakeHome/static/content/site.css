@@ -1,6 +1,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #0073BB;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -48,3 +49,34 @@ input[type="checkbox"].input-validation-error {
 .panel-group .panel + .panel {
     margin-top: 0;
 }
+
+.navbar {
+    background-color: #061556;
+}
+
+
+.table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-collapse: separate;
+    border-spacing: 10px;
+    
+}
+
+.footer {
+    color: #FEBD11;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Kabra Light', 'Darwin', sans-serif;
+}
+
+th, tr {
+    text-align: center;
+}
+
+tr {
+    margin-bottom: 10px;
+}
+

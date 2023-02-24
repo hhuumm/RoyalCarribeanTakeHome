@@ -79,7 +79,7 @@ def submit_employee():
     values = (person_id, first_name, last_name, email_address, hire_date, job_title, agency_num, registration_date)
     cursor.execute(query, values)
     cnx.commit()
-    return redirect(url_for('home', success="You have successfully submitted an employee"))
+    return redirect(url_for('home', success="Successfully submitted an employee"))
 
 @app.route('/api/employees', methods=['GET'])
 def get_employees():
@@ -110,7 +110,7 @@ def delete_employee(id):
     query = "DELETE FROM Employees WHERE person_id = %s"
     cursor.execute(query, (id,))
     cnx.commit()
-    return redirect(url_for('home', delete_success="You have successfully deleted employee."))
+    return redirect(url_for('home', delete_success="Successfully deleted employee."))
 
 @app.route('/edit/<person_id>', methods=['GET', 'POST'])
 def edit_employee(person_id):

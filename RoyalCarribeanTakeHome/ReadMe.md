@@ -20,7 +20,11 @@ Install the required packages by running pip install -r requirements.txt
 Set up the database by running python setup_database.py
 Start the Flask server by running python app.py
 Usage
-To use the project, open a web browser and go to http://localhost:5000/. From there, you can do X, Y, and Z.
+Be sure to have your .env file set up with the proper variable names
+PASSWORD 
+CONNECTION_STRING
+PORT
+To use the project, open a web browser and go to http://localhost:5000/. From there, you can get, put, post , or delete an employee. Be sure
 
 Contributing
 If you would like to contribute to the project, please follow these steps:

@@ -10,6 +10,3 @@ class Config:
     PASSWORD = os.getenv('PASSWORD' )
     CONNECTION_STRING = os.getenv('CONNECTION_STRING')
     PORT = os.getenv('PORT')
-
-    # Create database URI string
-    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{CONNECTION_STRING}:{PORT}/Database"
