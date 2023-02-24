@@ -49,6 +49,7 @@
     <Content Include="libman.json" />
     <Content Include="ReadMe.md" />
     <Content Include="requirements.txt" />
+    <Content Include="RoyalCarribeanTakeHome\.env" />
     <Content Include="RoyalCarribeanTakeHome\static\content\bootstrap.css" />
     <Content Include="RoyalCarribeanTakeHome\static\content\bootstrap.min.css" />
     <Content Include="RoyalCarribeanTakeHome\static\content\site.css" />
