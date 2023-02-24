@@ -26,8 +26,6 @@ MySQL
 
 # Prerequisites
 You must have a connection string, port and admin credentials to a mySQL database
-Installation
-To run the project locally, you will need to:
 
 # SQL Scripts
 Use this script to create the employee table
