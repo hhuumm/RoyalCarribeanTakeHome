@@ -116,9 +116,6 @@
   </div>
 
     <script>
-
-    console.log("FROM THE MAINSTAGE, IT\'s / BACK AT IT AGAIN WITH THE EMPLOYEE")
-    console.log("{{employee}}");
             //Adding Employee Validation
         document.querySelector("#employee-form").addEventListener("submit", function (event) {
             //Declarations
@@ -309,16 +306,7 @@
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
-
-    //Accordion Styling
-    var accordions = document.querySelectorAll('.accordion-header');
-    accordions.forEach(function (accordion) {
-        accordion.addEventListener('click', function (event) {
-            if (!this.classList.contains('collapsed')) {
-                this.scrollIntoView();
-            }
-        });
-    });
+     
 
 
     </script>

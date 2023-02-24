@@ -18,6 +18,7 @@
     <Name>RoyalCarribeanTakeHome</Name>
     <RootNamespace>RoyalCarribeanTakeHome</RootNamespace>
     <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <SuppressPackageInstallationPrompt>True</SuppressPackageInstallationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +45,7 @@
     <Folder Include="RoyalCarribeanTakeHome\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Dockerfile" />
     <Content Include="libman.json" />
     <Content Include="ReadMe.md" />
     <Content Include="requirements.txt" />
