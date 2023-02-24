@@ -67,14 +67,4 @@ PORT =
 # Run the server
 The default port is set to http://localhost:5000/. 
 From there, you can get, put, post , or delete an employee.
-[Or do none of that and just click here](http://3.235.139.171:5000/)
-
-
-# Contributing
-If you would like to contribute to the project, please follow these steps:
-
-Fork the repository
-Create a new branch for your changes
-Make your changes and commit them
-Push your changes to your forked repository
-Create a pull request from your branch to the main repository
+[Or just click here](http://3.235.139.171:5000/)
