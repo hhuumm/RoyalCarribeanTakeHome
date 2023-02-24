@@ -65,8 +65,11 @@ PASSWORD
 CONNECTION_STRING
 PORT
 
-To use the project, open a web browser and go to http://localhost:5000/. 
+# Run the server
+The default port is set to http://localhost:5000/. 
 From there, you can get, put, post , or delete an employee.
+[Or do none of that and just click here](http://3.235.139.171:5000/)
+
 
 # Contributing
 If you would like to contribute to the project, please follow these steps:
