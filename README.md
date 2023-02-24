@@ -29,7 +29,7 @@ You must have a connection string, port and admin credentials to a mySQL databas
 
 # SQL Scripts
 Use this script to create the employee table
-```
+```SQL
 CREATE TABLE Employee (
   person_id INT,
   first_name VARCHAR(50),
@@ -43,7 +43,7 @@ CREATE TABLE Employee (
 ```
 
 Use this script to populate the db with data
-```
+```SQL
 INSERT INTO employee (person_id, first_name, last_name, email_address, hire_date, job_title, agency_num, registration_date) VALUES
   (1000001, 'John', 'Doe', 'johndoe@example.com', '2022-01-01', 'TA Rep A', 123, '2022-01-01'),
   (1000002, 'Jane', 'Smith', 'janesmith@example.com', '2022-02-01', 'TA Rep B', 456, '2022-02-01'),
@@ -58,7 +58,7 @@ Install the required packages by running pip install -r requirements.txt
 Start the Flask server by running python runserver.py
 Usage
 Be sure to have your .env file set up with the proper variable names
-```
+```.env
 USERNAME =
 PASSWORD =
 CONNECTION_STRING =
