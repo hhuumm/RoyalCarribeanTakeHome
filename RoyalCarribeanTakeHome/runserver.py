@@ -2,7 +2,7 @@
 This script runs the RoyalCarribeanTakeHome application using a development server.
 """
 
-from os import environ
+
 from RoyalCarribeanTakeHome import app
 
 if __name__ == '__main__':
