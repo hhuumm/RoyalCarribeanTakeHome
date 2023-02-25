@@ -8,7 +8,7 @@
 ![alt text](https://i.imgur.com/3sIY60W.png)
 
 
-[Click here to see it live](http://3.235.139.171:5000/)
+[Click here to see it live](http://3.87.1.8:5000)
 
 
 This is a repository for the Caribbean Cruise FullStack Software Engineer Role. The project is designed to demonstrate full CRUD functionality and match the criteria requested by the hiring managers.
@@ -67,4 +67,4 @@ PORT =
 # Run the server
 The default port is set to http://localhost:5000/. 
 From there, you can get, put, post , or delete an employee.
-[Or just click here](http://3.235.139.171:5000/)
+[Or just click here](http://3.87.1.8:5000)
