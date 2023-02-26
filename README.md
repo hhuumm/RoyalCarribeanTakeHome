@@ -26,6 +26,7 @@ MySQL
 
 # Prerequisites
 You must have a connection string, port and admin credentials to a mySQL database
+Assuming your working on Linux, please refer to (microsoft documentation for starting a flask server)[https://learn.microsoft.com/en-us/visualstudio/python/learn-flask-visual-studio-step-01-project-solution?view=vs-2022]
 
 # SQL Scripts
 Use this script to create the employee table
@@ -54,9 +55,23 @@ INSERT INTO employee (person_id, first_name, last_name, email_address, hire_date
 
 # Installation
 Clone this repository to your local machine
-Install the required packages by running pip install -r requirements.txt
-Start the Flask server by running python runserver.py
-Usage
+
+Create your python virtual environment
+`python3 -m venv env`
+
+Activate your environment
+`source env/bin/activate`
+
+
+Install the required packages by running 
+`pip install -r requirements.txt`
+
+
+Start the Flask server by running 
+`python runserver.py`
+
+
+# Usage
 Be sure to have your .env file set up with the proper variable names
 ```.env
 USERNAME =
