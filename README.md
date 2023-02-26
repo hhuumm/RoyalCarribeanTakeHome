@@ -57,18 +57,18 @@ INSERT INTO employee (person_id, first_name, last_name, email_address, hire_date
 Clone this repository to your local machine
 
 Create your python virtual environment
-`python3 -m venv env`
+```python3 -m venv env```
 
 Activate your environment
-`source env/bin/activate`
+```source env/bin/activate```
 
 
 Install the required packages by running 
-`pip install -r requirements.txt`
+```pip install -r requirements.txt```
 
 
 Start the Flask server by running 
-`python runserver.py`
+```python runserver.py```
 
 
 # Usage
