@@ -26,7 +26,7 @@ MySQL
 
 # Prerequisites
 You must have a connection string, port and admin credentials to a mySQL database
-Assuming your working on Linux, please refer to (microsoft documentation for starting a flask server)[https://learn.microsoft.com/en-us/visualstudio/python/learn-flask-visual-studio-step-01-project-solution?view=vs-2022]
+Assuming your working on Linux, please refer to [microsoft documentation for starting a flask server](https://learn.microsoft.com/en-us/visualstudio/python/learn-flask-visual-studio-step-01-project-solution?view=vs-2022)
 
 # SQL Scripts
 Use this script to create the employee table
