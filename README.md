@@ -8,7 +8,7 @@
 ![alt text](https://i.imgur.com/3sIY60W.png)
 
 
-[Click here to see it live](http://3.87.1.8:5000)
+[Click here to see it live](http://3.237.185.251:5000/)
 
 
 This is a repository for the Caribbean Cruise FullStack Software Engineer Role. The project is designed to demonstrate full CRUD functionality and match the criteria requested by the hiring managers.
@@ -26,6 +26,7 @@ MySQL
 
 # Prerequisites
 You must have a connection string, port and admin credentials to a mySQL database
+Assuming your working on Linux, please refer to [microsoft documentation for starting a flask server](https://learn.microsoft.com/en-us/visualstudio/python/learn-flask-visual-studio-step-01-project-solution?view=vs-2022)
 
 # SQL Scripts
 Use this script to create the employee table
@@ -54,9 +55,27 @@ INSERT INTO employee (person_id, first_name, last_name, email_address, hire_date
 
 # Installation
 Clone this repository to your local machine
-Install the required packages by running pip install -r requirements.txt
-Start the Flask server by running python runserver.py
-Usage
+
+Create your python virtual environment
+
+```python3 -m venv env```
+
+Activate your environment
+
+```source env/bin/activate```
+
+
+Install the required packages by running 
+
+```pip install -r requirements.txt```
+
+
+Start the Flask server by running 
+
+```python runserver.py```
+
+
+# Usage
 Be sure to have your .env file set up with the proper variable names
 ```.env
 USERNAME =
@@ -67,4 +86,4 @@ PORT =
 # Run the server
 The default port is set to http://localhost:5000/. 
 From there, you can get, put, post , or delete an employee.
-[Or just click here](http://3.87.1.8:5000)
+[Or just click here](http://3.237.185.251:5000/)
