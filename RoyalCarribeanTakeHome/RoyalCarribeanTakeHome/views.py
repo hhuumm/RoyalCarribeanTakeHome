@@ -56,7 +56,7 @@ def submit_employee():
     hire_date = request.form.get('hire_date')
     job_title = request.form.get('job_title')
     agency_num = request.form.get('agency_num')
-    registration_date = request.form.get('registration_date')
+    registration_date = datetime.today()
 
     # Check if the person_id is already in use
     query = "SELECT COUNT(*) FROM Employees WHERE person_id = %s"
@@ -76,7 +76,7 @@ def submit_employee():
         (person_id, first_name, last_name, email_address, hire_date, job_title, agency_num, registration_date)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     """
-    values = (person_id, first_name, last_name, email_address, hire_date, job_title, agency_num, registration_date)
+    values = (person_id, first_name, last_name, email_address, hire_date, job_title, agency_num, registration_date.strftime('%Y-%m-%d'))
     cursor.execute(query, values)
     cnx.commit()
     return redirect(url_for('home', success="Successfully submitted an employee"))
@@ -98,7 +98,7 @@ def get_employees():
             "hire_date": row[4].strftime('%Y-%m-%d'),
             "job_title": row[5],
             "agency_num": row[6],
-            "registration_date": str(datetime.today())
+            "registration_date": row[7].strftime('%Y-%m-%d')
         }
         employees.append(employee)
 
