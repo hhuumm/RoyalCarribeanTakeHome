@@ -118,8 +118,8 @@
 
                 // Email
                 if (emailAddress) {
-                    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(emailAddress) || !emailAddress.includes('.') || emailAddress.includes(' ')) {
+                   //MB T9
+                    if (!emailAddress.includes('@') || !emailAddress.includes('.') || emailAddress.includes(' ') || (emailAddress.indexOf('@') > emailAddress.indexOf('.')))  {
                         event.preventDefault();
                         alert('Please enter a valid email address.');
                     }
