@@ -139,17 +139,6 @@ def edit_employee(person_id):
         # Check if an employee record with the given ID exists
         if not result:
             return redirect(url_for('home', error='Employee record not found'))
-
-        # Construct a dictionary representing the employee record
-        employee = {
-            'person_id': result[0],
-            'first_name': result[1],
-            'last_name': result[2],
-            'email_address': result[3],
-            'hire_date': result[4].strftime('%Y-%m-%d'),
-            'job_title': result[5],
-            'agency_num': result[6]
-        }
        
         # Render the edit form with the employee data
         return redirect(url_for('home', person_id=person_id))
